@@ -5,14 +5,10 @@ filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'rust-lang/rust.vim'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'Valloric/YouCompleteMe'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -23,13 +19,8 @@ filetype plugin on
 
 inoremap jk <Esc>
 
-
-
 " Start pathogen for plugins
 execute pathogen#infect()
-
-"inoremap <leader>b <esc>:b #<return>
-"noremap <leader>b :b #<return>
 
 "Use 4 spaces instead of tab
 set tabstop=4
@@ -37,35 +28,13 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4 expandtab
 
-"Delete and paste without yanking
-"nnoremap d "_d
-"vnoremap d "_d
-"
-""Delete and paste with yanking
-"nnoremap <leader>d d
-"vnoremap <leader>d d
-"
-"nnoremap <leader>dd dd
-"vnoremap <leader>dd dd
-"
-"vnoremap <leader>d d
-vnoremap p "_dP
-
-nnoremap <leader>c "_d
-vnoremap <leader>c "_d
-
-runtime macros/matchit.vim
-
 " Rust stuff!
-"nnoremap <S-F8> :!cargo test
-"nnoremap <S-F9> :!cargo run 
-"nnoremap <S-F10> :!cargo test && cargo run
-"
-:set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-"
-"" let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1, 'python':1 }
-let g:ycm_filetype_whitelist = { }
-"
+autocmd FileType rust nnoremap <buffer> <S-F8> :!cargo test
+autocmd FileType rust nnoremap <S-F9> :!cargo run<CR>
+autocmd FileType rust nnoremap <S-F10> :!cargo test && cargo run
+
+set list listchars=tab:>\\,trail:·,extends:#,nbsp:."
+
 inoremap <leader>f gqip
 nnoremap <leader>f gqip
 
@@ -73,6 +42,7 @@ nnoremap <leader>f gqip
 set smartindent
 set cinkeys-=0#
 set indentkeys-=0#
+
 "autocmd FileType c,cpp setlocal cindent smartindent
 autocmd FileType c,cpp setlocal cindent
 autocmd BufNewFile,BufRead *.handlebars setlocal noexpandtab filetype=html
@@ -82,36 +52,30 @@ autocmd BufNewFile,BufRead *.mdd setlocal noexpandtab fo=aw2tq
 
 "disable cursor blinking
 :set guicursor+=a:blinkon0
-"
-"" Can't paste without it
+
+" Use system clipboard
 set clipboard=unnamedplus
-"
-"" Ignore case during search
+
+" Ignore case during search
 set ignorecase
-"
+
 set history=1000
-"
-"" Highlight current line
+
+" Highlight current line
 set cursorline
 
 " source: Drew Neil - Practical Vim
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-"
 "" Move to end and start of line with L and H
 noremap H ^
 noremap L $
-"
-"" Easier to reach on AZERTY keyboard
-"noremap ù %
-"
-"" Center the screen after scrolling with ctrl-d and ctrl-u
+
+" Center the screen after scrolling with ctrl-d and ctrl-u
 noremap <c-d> <c-d>zz
 noremap <c-u> <c-u>zz
-"
-"fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-"
-"" Disable all beeping sounds
+
+" Disable all beeping sounds
 set vb t_vb=
 
 set hlsearch
@@ -121,12 +85,10 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-"noremap <Leader>n nzz
-"noremap <Leader>N Nzz
 noremap n nzz
 noremap N Nzz
 
-
+" Paste in command mode with ctrl-v
 cnoremap <C-v> <C-r>"
 
 " Better leader key
@@ -135,7 +97,9 @@ let mapleader=","
 " Allow to backspace any text in insert mode
 set backspace=indent,eol,start
 
+" Space to save
 noremap <space> :w!<cr>
+
 " Good colorscheme and font
 colorscheme solarized 
 
@@ -168,10 +132,6 @@ map <C-l> <C-W>l
 nnoremap gt :tabnext<CR>
 nnoremap gT :tabprevious<CR>
 nnoremap GT :tabprevious<CR>
-
-" Saving with ctrl-s
-nnoremap <c-s> :w<CR>
-inoremap <c-s> <Esc>:w<CR>i
 
 " Opens a new tab with the current buffer's path
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
@@ -213,12 +173,6 @@ if has("mac") || has("macunix")
   vmap <D-j> <M-j>
   vmap <D-k> <M-k>
 endif
-
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -280,6 +234,4 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
-
-inoremap ² <Esc>
 
