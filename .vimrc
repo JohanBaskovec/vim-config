@@ -43,6 +43,19 @@ set smartindent
 set cinkeys-=0#
 set indentkeys-=0#
 
+" copy paths
+" relative path (src/foo.txt)
+nnoremap <leader>crp :let @+=expand("%")<CR>
+
+" absolute path (/something/src/foo.txt)
+nnoremap <leader>cap :let @+=expand("%:p")<CR>
+
+" filename (foo.txt)
+nnoremap <leader>cfn :let @+=expand("%:t")<CR>
+
+" directory name (/something/src)
+nnoremap <leader>cdp :let @+=expand("%:p:h")<CR>
+
 "autocmd FileType c,cpp setlocal cindent smartindent
 autocmd FileType c,cpp setlocal cindent
 autocmd BufNewFile,BufRead *.handlebars setlocal noexpandtab filetype=html
